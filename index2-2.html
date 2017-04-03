@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title></title>
+		<style>
+			#div1{
+				width: 100px;
+				height: 100px;
+				background: red;
+				position: absolute;
+				left: 0;
+				top:50px;
+			}
+		</style>
+		<script type="text/javascript" src="./js/jquery-1.8.3.js"></script>
+		<script type="text/javascript" src="./js/TweenMax.js"></script>
+
+
+	</head>
+
+	<body>
+		<input type="button" id="play" value="播放" />
+		<input type="button" id="stop" value="停止" />
+		<input type="button" id="reverse" value="反向动画" />
+		<div id="div1"></div>
+	</body>
+	<script>
+        (function(){
+        	var t = new TimelineMax();
+        	t.to("#div1",1,{left:300},1)      //1   动画延迟一秒
+        	t.to("#div1",2,{width:300},'+=1') //+=1 在前面一个动画结束后延迟1秒执行
+        	t.to("#div1",2,{top:300},'-=1')   //-=1 在前面一个动画结束后提前一秒执行a'w
+        	t.to("#div1",2,{rotationZ:300,onComplete:function(){
+        		alert(1)
+        	}})   
+        	t.to("#div1",2,{opacity:0,onReverseComplete:function(){
+        		alert(2)
+        	}})
+        	t.stop();
+        	$('#play').click(function(){
+        		t.play()      //初始状态到达目标状态的过程
+        	})
+        	$('#stop').click(function(){
+        		t.stop()
+        	})
+        	$('#reverse').click(function(){  
+        		t.reverse()   //目标状态到达初始状态的过程
+        	})        	
+        }())
+	</script>
+</html>

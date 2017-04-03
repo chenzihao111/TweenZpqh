@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title></title>
+		<style>
+			#div1{
+				width: 100px;
+				height: 100px;
+				background: red;
+				position: absolute;
+				left: 0;
+				top:50px;
+			}
+
+		</style>
+		<script type="text/javascript" src="./js/jquery-1.8.3.js"></script>
+		<script type="text/javascript" src="./js/TweenMax.js"></script>
+		<script>
+			$(function(){
+
+				var t = new TimelineMax();
+                t.add('state1')
+                t.to("#div1",6,{left:300,onComplete:getCurrentLabel,ease:Bounce.easeIn})
+                t.add('state2')
+                t.to("#div1",6,{width:300,onComplete:getCurrentLabel})
+                t.add('state3')
+                t.to("#div1",6,{height:300,onComplete:getCurrentLabel})
+                t.add('state4')
+                //alert(t.totalDuration())
+                //alert(t.getLabelTime('state2'))
+                //alert(t.currentLabel())
+                getCurrentLabel()
+                function getCurrentLabel(){
+ 
+                	//获取当前动画的总时间
+                	var currentTime = t.getLabelTime(t.currentLabel());
+                	//获取到上一个状态
+                	var beforLabel = t.getLabelBefore(currentTime);
+                	//获取到下一个状态
+                	var afterLabel = t.getLabelAfter(currentTime);
+                	var beforeTime = t.getLabelTime(beforLabel)
+                	var afterTime = t.getLabelTime(afterLabel);
+                	var str = `
+                	          上一个状态 ： ${beforLabel}
+                              当前状态 ：   ${t.currentLabel()}
+                	          下一个状态 ： ${afterLabel}
+                	           <br>
+                	          当前时间 ：   ${currentTime}
+                	          上一个状态时间 ： ${beforeTime}
+                	          下一个状态时间 ： ${afterTime}
+                	          `
+
+                	$('#label').html(str)
+
+                }
+			})
+		</script>
+	</head>
+
+	<body>
+	    <div id="label"></div>
+		<div id="div1"></div>
+	</body>
+</html> 
